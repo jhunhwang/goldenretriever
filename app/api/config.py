@@ -8,16 +8,16 @@ PROJECT_ROOT = abspath(dirname(dirname(dirname(__file__))))
 ES_URL = 'http://localhost:9200' # change this to your own ES URL Endpoint 
 
 # change to your own qa index name 
-QA_INDEX = 'qa_pdpa'
+QA_INDEX = 'duke_hr'
 
 # name of index that stores log of user queries 
 QUERY_LOG = 'querylog'
 
 # paths for nearest neighbor index
-INDEX_BUCKET = 'pdpa-index'
-INDEX_PICKLE = 'pdpa-data.pkl'
-INDEX_FILE = 'pdpa.idx'
-INDEX_PREFIX = 'pdpa'
+INDEX_BUCKET = 'duke_hr-index'
+INDEX_PICKLE = 'duke_hr-data.pkl'
+INDEX_FILE = 'duke_hr.idx'
+INDEX_PREFIX = 'duke_hr'
 INDEX_FOLDER = join(PROJECT_ROOT, 'model_artefacts')
 INDEX_PICKLE_PATH = join(INDEX_FOLDER, INDEX_PICKLE)
 INDEX_FILE_PATH = join(INDEX_FOLDER, INDEX_FILE)
