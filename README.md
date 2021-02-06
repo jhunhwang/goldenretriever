@@ -190,7 +190,7 @@ You may start the streamlit directly by running the following command with the u
 ```
 streamlit run app/streamlit/main.py -- --url <url for API endpoints>
 
-eg. streamlit run app/streamlit/main.py -- --url http://localhost:8000
+eg. streamlit run app/streamlit/app.py -- --url http://localhost:8000
 ```
 
 
