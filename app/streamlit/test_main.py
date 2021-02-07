@@ -17,8 +17,51 @@ from automate_finetune import run_finetune
 from automate_index_extract import main_index_extract
 from automate_index_encode import main_index_encode
 import time
+import datetime 
+import sqlite3
+from sqlite3 import Error
+
+def create_connection(db_file):
+    conn = None
+    try:
+        conn = sqlite3.connect(db_file)
+        print(sqlite3.version)
+        return conn
+    except Error as e:
+        print(e)
+    
+    return conn
+
+def create_table(conn, create_table_sql):
+    try:
+        c = conn.cursor()
+        c.execute(create_table_sql)
+        print('Table has been created successfully!')
+    except Error as e:
+        print(e)
+
+def main_db_setup(conn):
+    create_data_table = 'CREATE TABLE IF NOT EXISTS userinput (id integer PRIMARY KEY, query_str text NOT NULL, time_sent DATE NOT NULL);'
+    # create tables
+    if conn is not None:
+        # create data table
+        create_table(conn, create_data_table)
+    else:
+        print("Error! cannot create the database connection.")
+
+def insert_user_input(conn, data):
+    
+    if conn is not None:
+        sql_statement = ''' INSERT INTO userinput(query_str, time_sent)
+              VALUES(?,?) '''
+        cur = conn.cursor()
+        cur.execute(sql_statement, data)
+        conn.commit()
+        return f"You have successfully inserted the user input data into the database! The row id is {cur.lastrowid}!"
 
 def app():
+    conn = create_connection('qna_data.db')
+    main_db_setup(conn)
     # API arguments
     parser = argparse.ArgumentParser()
     parser.add_argument('--url', 
@@ -61,9 +104,12 @@ def app():
         else:
             st.markdown(res.status_code)
             st.markdown(res.json())
-
+    
+        if (query_string.strip() != ''):
+            insert_user_input(conn, [query_string, datetime.date.today()])
+        
     checkbox_list = [st.empty() for i in range(5)]
-
+    
     # feedback logic
     if state.fetch:        
 
@@ -107,7 +153,9 @@ def app():
     , unsafe_allow_html=True)
     
     st.markdown('# Tuning and Training the Model')
+    st.markdown('## Warning. This will take quite some time to run.')
     st.markdown('Click the button below to update your new data into the model!')
+    
     status_text = st.empty()
     
     if st.button('Train!'):
