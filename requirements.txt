@@ -21,3 +21,4 @@ python-dotenv
 click
 simpleneighbors
 sphinx_rtd_theme
+numpy==1.19.5
