@@ -4,6 +4,7 @@ from sqlite3 import Error
 import pandas as pd 
 from datetime import datetime
 from automate_upload import trigger_upload
+import os 
 
 def create_connection(db_file):
     conn = None
@@ -82,6 +83,15 @@ def app():
             st.markdown(f'You have successfully saved your data in the ``data`` folder and also in ``elk`` at {display_date}!')
             print(result)
             st.balloons()
+        except Exception as e:
+            print(e)
+            st.write('An error occured. Please try again!')
+    elif (st.button("Reset Database")):
+        try:
+            os.remove('qna_data.db')
+            st.markdown(f'The database has been successfully resetted! Please refresh the website.')
+        except FileNotFoundError:
+            st.write('The database file does not exist! Please refresh the website!')
         except Exception as e:
             print(e)
             st.write('An error occured. Please try again!')

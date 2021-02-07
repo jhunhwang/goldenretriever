@@ -4,6 +4,7 @@ import sqlite3
 from sqlite3 import Error
 from datetime import datetime
 from automate_upload import trigger_upload
+import os 
 
 def create_connection(db_file):
     conn = None
@@ -100,3 +101,15 @@ def app():
         except Exception as e:
             print(e)
             st.write('An error occured. Please try again!')
+    
+    elif (st.button("Reset Database")):
+        try:
+            os.remove('qna_data.db')
+            st.markdown(f'The database has been successfully resetted! Please refresh the website.')
+        except FileNotFoundError:
+            st.write('The database file does not exist! Please refresh the website!')
+        except Exception as e:
+            print(e)
+            st.write('An error occured. Please try again!')
+        
+            
