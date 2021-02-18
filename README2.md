@@ -2,7 +2,7 @@
 ### Installation and requirements
 - python version: 3.6 - 3.7 (some tensorflow modules are uncompatible with python 3.8)
 - updated requirements.txt file on module versions
-
+- Linux is needed for tensorflow-text
 ### 1) Change configurations under:
 ```./app/api/config```
 
